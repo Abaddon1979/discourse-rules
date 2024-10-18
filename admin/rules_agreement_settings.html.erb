@@ -1,0 +1,11 @@
+<h1>Rules Agreement Settings</h1>
+
+<%= form_with url: admin_rules_agreement_settings_path, method: :put do |f| %>
+  <div>
+    <label for="rules">Community Rules:</label><br>
+    <textarea name="rules" id="rules" rows="10" cols="50"><%= @rules %></textarea>
+  </div>
+  <div>
+    <button type="submit">Save Changes</button>
+  </div>
+<% end %>
