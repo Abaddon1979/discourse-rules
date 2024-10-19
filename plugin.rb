@@ -1,4 +1,11 @@
 # plugin.rb
+
+# name: discourse-rules-agreement
+# about: "A plugin to require users to agree to rules on first login."
+# version: "0.1.0"
+# authors: "Your Name"
+# url: "https://github.com/yourusername/discourse-rules-agreement"
+
 plugin_name = "rules_agreement"
 
 class RulesAgreement < ::Plugin::Instance
