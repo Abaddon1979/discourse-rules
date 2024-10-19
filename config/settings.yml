@@ -1,2 +1,7 @@
-rules_agreement:
-  rules: "Rule 1: Be respectful.\nRule 2: No spam.\nRule 3: Keep discussions on topic."
+rules_agreement_enabled:
+  default: true
+  client: true
+
+rules_agreement_rules:
+  default: "1. Be respectful.\n2. No spam.\n3. Stay on topic."
+  client: true

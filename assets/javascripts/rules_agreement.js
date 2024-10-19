@@ -1,4 +1,3 @@
-// rules_agreement.js
 document.addEventListener("DOMContentLoaded", () => {
     const checkFirstLogin = async () => {
         const response = await fetch('/check_rules');

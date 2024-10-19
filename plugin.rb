@@ -6,25 +6,32 @@
 # authors: "Abaddon"
 # url: "https://github.com/Abaddon1979/discourse-rules"
 
-plugin_name = "rules_agreement"
+enabled_site_setting :rules_agreement_enabled
 
-class RulesAgreement < ::Plugin::Instance
-  def initialize
-    super
-    register_javascript("rules_agreement.js")
-    register_stylesheet("rules_agreement.css")
+register_asset "javascripts/rules_agreement.js"
+register_asset "stylesheets/rules_agreement.scss"
 
-    # Add admin settings
-    add_admin_route 'Rules Agreement', 'rules-agreement', 'admin/rules_agreement_settings'
-
-    # Hook into the user login event
-    ::Discourse::Application.routes.append do
-      get '/check_rules', to: 'rules_agreement#check_rules'
-      post '/check_rules', to: 'rules_agreement#update_rules_agreement'
+after_initialize do
+  module ::RulesAgreement
+    class Engine < ::Rails::Engine
+      engine_name 'rules_agreement'
+      isolate_namespace RulesAgreement
     end
   end
 
-  def rules
-    SiteSetting.rules_agreement_rules || "No rules set."
+  Discourse::Application.routes.append do
+    get '/check_rules' => 'rules_agreement#check_rules'
+    post '/check_rules' => 'rules_agreement#agree_rules'
+    get '/admin/plugins/rules_agreement' => 'rules_agreement_settings#index', as: 'admin_rules_agreement_settings'
+    post '/admin/plugins/rules_agreement/update' => 'rules_agreement_settings#update', as: 'admin_rules_agreement_update'
+    mount ::RulesAgreement::Engine, at: '/admin/plugins/rules_agreement'
+  end
+
+  require_dependency 'rules_agreement/controller'
+  require_dependency 'rules_agreement/settings_controller'
+
+  Discourse::Event.on(:user_created) do |user|
+    user.trust_level = 0
+    user.save!
   end
 end

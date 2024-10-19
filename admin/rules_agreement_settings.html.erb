@@ -1,6 +1,8 @@
+<!-- admin/rules_agreement_settings.html.erb -->
+
 <h1>Rules Agreement Settings</h1>
 
-<%= form_with url: admin_rules_agreement_settings_path, method: :put do |f| %>
+<%= form_with url: admin_rules_agreement_update_path, method: :post do |f| %>
   <div>
     <label for="rules">Community Rules:</label><br>
     <textarea name="rules" id="rules" rows="10" cols="50"><%= @rules %></textarea>
